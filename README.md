@@ -70,7 +70,7 @@ Esses itens poderão ser estudados depois do MVP, condicionados aos resultados, 
 ```mermaid
 flowchart LR
     U[Usuário] --> W[Interface web<br/>HTML, CSS e JavaScript]
-    W --> A[API Python<br/>FastAPI]
+    W --> A[API Python<br/>Django]
     A --> M[Normalização e<br/>correspondência textual]
     M --> K[(PostgreSQL<br/>conhecimento e registros)]
     M --> C{Confiança suficiente?}
@@ -81,14 +81,14 @@ flowchart LR
     V --> K
 ```
 
-PostgreSQL foi definido como banco de dados do projeto, concentrando a base de conhecimento e os registros operacionais mínimos. FastAPI permanece como proposta a confirmar durante o levantamento de requisitos. Supabase e modelos avançados não são necessários para demonstrar o MVP.
+PostgreSQL foi definido como banco de dados do projeto, concentrando a base de conhecimento e os registros operacionais mínimos. Django permanece como proposta a confirmar durante o levantamento de requisitos. Supabase e modelos avançados não são necessários para demonstrar o MVP.
 
 Os componentes, contratos da API, modelo de dados, fluxos, controles de segurança e decisões técnicas estão detalhados em [docs/ARQUITETURA.md](docs/ARQUITETURA.md).
 
 ## Tecnologias previstas
 
 - **Frontend:** HTML5, CSS3 e JavaScript;
-- **Backend:** Python com FastAPI;
+- **Backend:** Python com Django;
 - **Banco de dados:** PostgreSQL para a base de conhecimento e os registros operacionais mínimos;
 - **PLN:** normalização, palavras-chave e similaridade textual;
 - **Qualidade:** testes automatizados, testes de conteúdo e avaliação de usabilidade;
