@@ -153,14 +153,16 @@ chatbot-aginov/
 │   │   ├── chat/           # Endpoints e mecanismo de resposta
 │   │   ├── knowledge/      # Conhecimento e Django Admin
 │   │   └── interactions/   # Feedback e dúvidas não atendidas
-│   ├── data/
-│   │   ├── seeds/          # Carga inicial revisada
-│   │   └── samples/        # Dados fictícios para desenvolvimento
-│   ├── tests/              # Testes do backend e avaliação do matcher
 │   └── manage.py
 ├── frontend/               # Interface web servida pelo Django
 │   ├── templates/          # Templates HTML
 │   └── static/             # CSS, JavaScript e imagens da aplicação
+├── data/                   # Dados, seeds e amostras para desenvolvimento
+│   ├── seeds/
+│   └── samples/
+├── tests/                  # Testes do backend e do frontend
+│   ├── backend/
+│   └── frontend/
 ├── assets/                 # Imagens da documentação
 ├── docs/                   # Arquitetura e planejamento
 └── README.md
