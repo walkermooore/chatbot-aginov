@@ -29,15 +29,15 @@ O **Chatbot AGINOV** é um protótipo de pesquisa para apoiar o atendimento info
 
 > O chatbot oferece orientação inicial. Ele não substitui documentos, decisões, servidores ou canais oficiais da AGINOV/UNEMAT.
 
-| | |
-| --- | --- |
-| **Subprojeto** | Chatbot AGINOV: Desenvolvimento Web e Inteligência Artificial |
-| **Projeto vinculado** | Tecnologias Digitais em Setores Estratégicos — TecDISE |
-| **Bolsista** | Léo Walker da Silva |
-| **Orientador** | Fernando Selleri Silva |
-| **Instituição** | UNEMAT — Câmpus Cáceres Jane Vanini |
-| **Curso** | Ciência da Computação |
-| **Fase atual** | Planejamento, fundamentação e levantamento inicial |
+| |                                                                         |
+| --- |-------------------------------------------------------------------------|
+| **Subprojeto** | Chatbot AGINOV: Desenvolvimento Web e Inteligência Artificial           |
+| **Projeto vinculado** | Tecnologias Digitais em Setores Estratégicos — TecDISE                  |
+| **Bolsista** | Léo Walker da Silva, Gustavo Henrique Dias Felix e Dean de Novais Souza |
+| **Orientador** | Fernando Selleri Silva e Amabilen de Oliveira Furlan                    |
+| **Instituição** | UNEMAT — Câmpus Cáceres Jane Vanini                                     |
+| **Curso** | Ciência da Computação                                                   |
+| **Fase atual** | Planejamento, fundamentação e levantamento inicial                      |
 
 ### Problema e proposta
 
