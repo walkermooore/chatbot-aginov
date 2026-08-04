@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chatbot AGINOV</title>
+</head>
+<body>
+    <h1>Chatbot AGINOV</h1>
+    <p>Digite uma pergunta para testar a primeira resposta do MVP.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="question">Pergunta</label>
+        <input id="question" name="question" type="text" required style="width: 100%; max-width: 480px;">
+        <button type="submit">Enviar</button>
+    </form>
+
+    {% if result %}
+        <div style="margin-top: 24px; padding: 16px; border: 1px solid #ccc; max-width: 640px;">
+            <p><strong>Status:</strong> {{ result.status }}</p>
+            <p>{{ result.message }}</p>
+            {% if result.source %}
+                <p><strong>Fonte:</strong> {{ result.source.title }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
