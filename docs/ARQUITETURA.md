@@ -92,7 +92,7 @@ flowchart TB
 | Matcher | normalizar perguntas, gerar candidatos e calcular pontuações | biblioteca local de PLN/similaridade a definir |
 | Persistência | mapear entidades, aplicar migrações e consultar dados | Django ORM + PostgreSQL |
 
-Interface pública, endpoints JSON e administração serão entregues pela mesma aplicação Django e pela mesma origem. A separação acima é modular, não física, mantendo um monólito simples de implantar.
+Interface pública, endpoints JSON e administração serão entregues pela mesma aplicação Django e pela mesma origem. No repositório, `backend/` concentrará a aplicação Django e `frontend/` reunirá templates e arquivos estáticos. Essa organização física não altera a arquitetura de implantação: o sistema continuará sendo um monólito simples.
 
 ## 5. Componentes internos do backend
 
@@ -127,7 +127,7 @@ O matcher e as políticas de confiança permanecerão como Python puro. Views e 
 
 ## 6. Componentes do frontend
 
-O frontend será entregue por Django Templates e arquivos estáticos, organizado por responsabilidade:
+O frontend ficará em `frontend/` e será entregue por Django Templates e arquivos estáticos, organizado por responsabilidade:
 
 - **template público:** estrutura semântica da página, aviso e token CSRF;
 - **HTTP client:** comunicação com endpoints da mesma origem, timeout e tradução de erros;

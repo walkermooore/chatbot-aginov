@@ -147,20 +147,22 @@ Consulte a [arquitetura completa](docs/ARQUITETURA.md) para ver componentes, con
 
 ```text
 chatbot-aginov/
+├── backend/                # Aplicação Django e regras de negócio
+│   ├── config/             # Settings, URLs e WSGI/ASGI
+│   ├── apps/
+│   │   ├── chat/           # Endpoints e mecanismo de resposta
+│   │   ├── knowledge/      # Conhecimento e Django Admin
+│   │   └── interactions/   # Feedback e dúvidas não atendidas
+│   ├── data/
+│   │   ├── seeds/          # Carga inicial revisada
+│   │   └── samples/        # Dados fictícios para desenvolvimento
+│   ├── tests/              # Testes do backend e avaliação do matcher
+│   └── manage.py
+├── frontend/               # Interface web servida pelo Django
+│   ├── templates/          # Templates HTML
+│   └── static/             # CSS, JavaScript e imagens da aplicação
 ├── assets/                 # Imagens da documentação
-├── config/                 # Settings, URLs e WSGI/ASGI
-├── apps/
-│   ├── chat/               # Interface e mecanismo de resposta
-│   ├── knowledge/          # Conhecimento e Django Admin
-│   └── interactions/       # Feedback e dúvidas não atendidas
-├── templates/              # Templates HTML
-├── static/                 # CSS, JavaScript e imagens da aplicação
-├── data/
-│   ├── seeds/              # Carga inicial revisada
-│   └── samples/            # Dados fictícios para desenvolvimento
 ├── docs/                   # Arquitetura e planejamento
-├── tests/                  # Testes e conjuntos de avaliação
-├── manage.py
 └── README.md
 ```
 
