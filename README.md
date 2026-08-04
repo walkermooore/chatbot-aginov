@@ -1,185 +1,273 @@
-<p align="center">
-  <img src="assets/images.png" alt="Logo da Agência de Inovação da UNEMAT — AGINOV" width="280">
-</p>
+<div align="center">
+  <img src="assets/logo-aginov-2.svg" alt="Logo da Agência de Inovação da UNEMAT — AGINOV" width="720">
 
-# Chatbot AGINOV
+  <h1>Chatbot AGINOV</h1>
 
-Protótipo web de chatbot para apoio ao atendimento informacional da Agência de Inovação da Universidade do Estado de Mato Grosso (AGINOV/UNEMAT).
+  <p><strong>Assistente web para acesso simples, seguro e rastreável às informações da AGINOV/UNEMAT.</strong></p>
 
-O projeto integra o subprojeto de iniciação científica **“Chatbot AGINOV: Desenvolvimento Web e Inteligência Artificial”**, vinculado ao projeto **Tecnologias Digitais em Setores Estratégicos (TecDISE)**. Seu propósito é facilitar o acesso inicial a informações institucionais sem substituir os canais, documentos ou decisões oficiais da Universidade.
+  <p>
+    <img src="https://img.shields.io/badge/status-planejamento-FF9F04?style=for-the-badge" alt="Status: planejamento">
+    <img src="https://img.shields.io/badge/tipo-pesquisa%20aplicada-0197AF?style=for-the-badge" alt="Tipo: pesquisa aplicada">
+    <img src="https://img.shields.io/badge/privacidade-LGPD%20by%20design-0B6E75?style=for-the-badge" alt="Privacidade: LGPD by design">
+  </p>
 
-> **Status:** planejamento e levantamento inicial. O software ainda não foi implementado.
+  <p>
+    <a href="#sobre-o-projeto">Sobre</a> •
+    <a href="#stack-tecnológica">Tecnologias</a> •
+    <a href="#arquitetura">Arquitetura</a> •
+    <a href="#planejamento">Planejamento</a> •
+    <a href="#estratégia-de-branches">Branches</a> •
+    <a href="#documentação">Documentação</a>
+  </p>
+</div>
 
-## Problema
+---
 
-Informações sobre inovação, tecnologia, propriedade intelectual, empreendedorismo e serviços da AGINOV podem estar distribuídas entre páginas, documentos e canais diferentes. Isso dificulta a localização de orientações iniciais e pode gerar atendimentos manuais repetitivos.
+## Sobre o projeto
 
-O Chatbot AGINOV será um artefato experimental para organizar esse conhecimento e oferecer uma interface conversacional acessível. Quando não houver uma resposta confiável, o sistema deverá deixar essa limitação explícita e encaminhar o usuário para um canal oficial.
+O **Chatbot AGINOV** é um protótipo de pesquisa para apoiar o atendimento informacional da Agência de Inovação da Universidade do Estado de Mato Grosso. A aplicação organizará perguntas frequentes sobre inovação, tecnologia, propriedade intelectual e empreendedorismo em uma experiência conversacional acessível.
 
-## Objetivo
+> O chatbot oferece orientação inicial. Ele não substitui documentos, decisões, servidores ou canais oficiais da AGINOV/UNEMAT.
 
-Desenvolver e avaliar um protótipo web capaz de:
+| |                                                                         |
+| --- |-------------------------------------------------------------------------|
+| **Subprojeto** | Chatbot AGINOV: Desenvolvimento Web e Inteligência Artificial           |
+| **Projeto vinculado** | Tecnologias Digitais em Setores Estratégicos — TecDISE                  |
+| **Bolsista** | Léo Walker da Silva, Gustavo Henrique Dias Felix e Dean de Novais Souza |
+| **Orientador** | Fernando Selleri Silva e Amabilen de Oliveira Furlan                    |
+| **Instituição** | UNEMAT — Câmpus Cáceres Jane Vanini                                     |
+| **Curso** | Ciência da Computação                                                   |
+| **Fase atual** | Planejamento, fundamentação e levantamento inicial                      |
 
-- receber perguntas em linguagem natural;
-- sugerir assuntos e categorias de atendimento;
-- localizar respostas em uma base de conhecimento aprovada;
-- informar o grau de limitação da resposta e aplicar fallback quando necessário;
-- direcionar o usuário aos canais oficiais;
-- registrar, de forma minimizada e segura, dúvidas que a base não conseguiu atender;
-- gerar evidências sobre qualidade das respostas, usabilidade e viabilidade técnica.
+### Problema e proposta
+
+| Problema | Resposta do projeto |
+| --- | --- |
+| Informações distribuídas em páginas, documentos e canais diferentes. | Base de conhecimento centralizada e revisada. |
+| Usuários nem sempre sabem onde procurar uma orientação inicial. | Interface conversacional com categorias e perguntas livres. |
+| Dúvidas repetidas aumentam o atendimento manual. | Respostas frequentes com fonte e encaminhamento oficial. |
+| Uma resposta incerta pode causar desinformação. | Critério de confiança, detecção de ambiguidade e fallback seguro. |
+
+## Stack tecnológica
+
+<table align="center">
+  <tr>
+    <td align="center" width="150">
+      <a href="https://www.python.org/">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="56" height="56" alt="Python">
+      </a>
+      <br><strong>Python</strong><br><sub>Linguagem principal</sub>
+    </td>
+    <td align="center" width="150">
+      <a href="https://www.djangoproject.com/">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" width="56" height="56" alt="Django">
+      </a>
+      <br><strong>Django</strong><br><sub>Aplicação web e Admin</sub>
+    </td>
+    <td align="center" width="150">
+      <a href="https://www.postgresql.org/">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" width="56" height="56" alt="PostgreSQL">
+      </a>
+      <br><strong>PostgreSQL</strong><br><sub>Persistência relacional</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="150">
+      <a href="https://developer.mozilla.org/docs/Web/HTML">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="56" height="56" alt="HTML5">
+      </a>
+      <br><strong>HTML5</strong><br><sub>Estrutura semântica</sub>
+    </td>
+    <td align="center" width="150">
+      <a href="https://developer.mozilla.org/docs/Web/CSS">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width="56" height="56" alt="CSS3">
+      </a>
+      <br><strong>CSS3</strong><br><sub>Interface responsiva</sub>
+    </td>
+    <td align="center" width="150">
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="56" height="56" alt="JavaScript">
+      </a>
+      <br><strong>JavaScript</strong><br><sub>Interação conversacional</sub>
+    </td>
+  </tr>
+</table>
+
+Django centralizará templates, endpoints JSON, validações, ORM, migrations, autenticação administrativa e gestão de conteúdo. O mecanismo de correspondência será implementado em Python puro para permanecer explicável e testável.
 
 ## Escopo do MVP
 
-### Incluído
+| Incluído no MVP | Preparado para uma etapa futura |
+| --- | --- |
+| ✅ Interface conversacional responsiva | ⏭️ IA generativa ou RAG |
+| ✅ Categorias e perguntas em linguagem natural | ⏭️ Integração com WhatsApp |
+| ✅ Base revisada com respostas, variações e fontes | ⏭️ Painel editorial personalizado |
+| ✅ Correspondência textual determinística | ⏭️ Autenticação do público |
+| ✅ Critério de confiança e fallback | ⏭️ Integrações com sistemas institucionais |
+| ✅ Feedback de utilidade da resposta | ⏭️ Implantação institucional definitiva |
+| ✅ Registro sanitizado de dúvidas não atendidas | ⏭️ Modelos externos pagos |
+| ✅ Django Admin para manutenção interna básica | ⏭️ Escalabilidade de grande volume |
 
-- interface conversacional web responsiva;
-- saudação, orientações de uso e aviso de caráter informacional;
-- categorias e perguntas frequentes;
-- base de conhecimento com pergunta, variações, resposta, categoria, palavras-chave, fonte e data de revisão;
-- mecanismo simples de correspondência textual, sem geração autônoma de conteúdo;
-- critério configurável de confiança;
-- resposta de fallback e encaminhamento oficial;
-- registro sanitizado de perguntas não atendidas;
-- avaliação simples da utilidade da resposta;
-- testes funcionais, de conteúdo, acessibilidade e usabilidade;
-- documentação técnica, tutorial de uso e relatório de avaliação.
+O MVP não responderá sobre casos individuais, decisões administrativas ou dados sigilosos e não representará posicionamento oficial da instituição.
 
-### Fora do escopo inicial
+## Como funciona
 
-- substituir o atendimento ou representar posicionamento oficial da AGINOV/UNEMAT;
-- IA generativa, RAG ou contratação de APIs pagas;
-- integração com WhatsApp ou outros mensageiros;
-- autenticação de usuários e coleta de dados pessoais;
-- painel administrativo completo;
-- implantação institucional em produção;
-- respostas sobre casos individuais, decisões administrativas ou dados sigilosos.
+| Etapa | Ação | Proteção aplicada |
+| :---: | --- | --- |
+| 1 | O visitante escolhe uma categoria ou escreve uma pergunta. | Aviso para não inserir dados pessoais. |
+| 2 | Uma view Django valida a requisição. | CSRF, formato e limite de tamanho. |
+| 3 | O serviço normaliza o texto e consulta itens aprovados. | Somente conteúdo vigente participa da busca. |
+| 4 | O matcher classifica os candidatos. | Pontuação e margem de ambiguidade configuráveis. |
+| 5 | O sistema responde ou aplica fallback. | Nenhuma resposta afirmativa abaixo da confiança mínima. |
+| 6 | O visitante pode avaliar a utilidade. | Persistência mínima, agregada e com retenção definida. |
 
-Esses itens poderão ser estudados depois do MVP, condicionados aos resultados, às autorizações institucionais e à análise de privacidade e segurança.
-
-## Funcionamento esperado
-
-1. O usuário acessa a página, lê o aviso e escolhe uma categoria ou escreve uma pergunta.
-2. A API normaliza o texto e compara a pergunta com variações e palavras-chave da base aprovada.
-3. Se o resultado cumprir o critério de confiança, o chatbot apresenta a resposta e sua fonte oficial.
-4. Se não houver confiança suficiente, o chatbot não tenta completar a informação: exibe o fallback e indica um canal oficial.
-5. A pergunta não atendida pode ser registrada após sanitização, sem identificação do usuário, para revisão posterior.
-6. O usuário pode avaliar se a resposta foi útil.
-
-## Arquitetura de referência
+## Arquitetura
 
 ```mermaid
 flowchart LR
-    U[Usuário] --> W[Interface web<br/>HTML, CSS e JavaScript]
-    W --> A[API Python<br/>FastAPI]
-    A --> M[Normalização e<br/>correspondência textual]
-    M --> K[(Base de conhecimento<br/>JSON versionado)]
-    M --> C{Confiança suficiente?}
+    U[Visitante] --> T[Django Template<br/>HTML, CSS e JavaScript]
+    T --> V[Views Django<br/>HTML e JSON]
+    V --> S[Serviço de resposta]
+    S --> M[Normalização e<br/>similaridade textual]
+    S --> O[Django ORM]
+    O --> P[(PostgreSQL)]
+    M --> C{Confiança e<br/>ambiguidade válidas?}
     C -->|Sim| R[Resposta + fonte]
     C -->|Não| F[Fallback + canal oficial]
-    F --> S[(Registro sanitizado<br/>SQLite)]
-    R --> V[Avaliação de utilidade]
-    V --> S
+    E[Equipe autorizada] --> A[Django Admin]
+    A --> O
 ```
 
-Essa é uma decisão inicial para reduzir complexidade. FastAPI, JSON e SQLite deverão ser confirmados durante o levantamento de requisitos. PostgreSQL, Supabase e modelos avançados não são necessários para demonstrar o MVP.
+A solução seguirá um **monólito modular**: uma única aplicação Django, separada internamente em módulos de chat, conhecimento e interações. Essa escolha reduz o custo operacional do protótipo sem misturar a interface com as regras do experimento.
 
-Os componentes, contratos da API, modelo de dados, fluxos, controles de segurança e decisões técnicas estão detalhados em [docs/ARQUITETURA.md](docs/ARQUITETURA.md).
+Consulte a [arquitetura completa](docs/ARQUITETURA.md) para ver componentes, contratos HTTP, modelo relacional, segurança, testes e implantação.
 
-## Tecnologias previstas
-
-- **Frontend:** HTML5, CSS3 e JavaScript;
-- **Backend:** Python com FastAPI;
-- **Conhecimento:** JSON versionado, alimentado somente por conteúdo autorizado;
-- **Registros locais:** SQLite;
-- **PLN:** normalização, palavras-chave e similaridade textual;
-- **Qualidade:** testes automatizados, testes de conteúdo e avaliação de usabilidade;
-- **Versionamento:** Git e GitHub.
-
-As bibliotecas concretas e suas versões serão registradas quando a implementação começar.
-
-## Estrutura planejada
+<details>
+<summary><strong>Ver estrutura planejada do repositório</strong></summary>
 
 ```text
 chatbot-aginov/
-├── app/                    # API e mecanismo de resposta
-├── frontend/               # Interface web
-├── data/
-│   ├── knowledge_base/     # Conteúdo aprovado e versionado
-│   └── samples/            # Exemplos fictícios para desenvolvimento
-├── docs/                   # Planejamento e documentação do projeto
-├── tests/                  # Testes automatizados e conjuntos de avaliação
-├── README.md
-└── ...                     # Configurações adicionadas durante a implementação
+├── backend/                # Aplicação Django e regras de negócio
+│   ├── config/             # Settings, URLs e WSGI/ASGI
+│   ├── apps/
+│   │   ├── chat/           # Endpoints e mecanismo de resposta
+│   │   ├── knowledge/      # Conhecimento e Django Admin
+│   │   └── interactions/   # Feedback e dúvidas não atendidas
+│   ├── data/
+│   │   ├── seeds/          # Carga inicial revisada
+│   │   └── samples/        # Dados fictícios para desenvolvimento
+│   ├── tests/              # Testes do backend e avaliação do matcher
+│   └── manage.py
+├── frontend/               # Interface web servida pelo Django
+│   ├── templates/          # Templates HTML
+│   └── static/             # CSS, JavaScript e imagens da aplicação
+├── assets/                 # Imagens da documentação
+├── docs/                   # Arquitetura e planejamento
+└── README.md
 ```
 
-A estrutura representa o destino planejado, não o estado atual do repositório.
+</details>
 
-## Privacidade, segurança e LGPD
+## Privacidade e segurança
 
-O MVP seguirá os princípios de finalidade, adequação, necessidade, segurança, prevenção e transparência. Em particular:
+O projeto adota **privacidade desde a concepção**:
 
-- não solicitará nome, CPF, RG, senha, dados bancários ou dados sensíveis;
-- alertará o usuário para não inserir dados pessoais na conversa;
-- não criará perfil de usuário nem dependerá de identificação individual;
-- limitará registros ao necessário para avaliar e melhorar o protótipo;
-- sanitizará perguntas não atendidas antes da persistência;
-- definirá prazo de retenção e procedimento de exclusão antes de qualquer teste com usuários;
-- usará somente conteúdo público ou expressamente autorizado na base;
-- exibirá fonte e data de revisão das informações quando disponíveis;
-- encaminhará casos específicos ou incertos aos canais oficiais.
+- não solicita nome, CPF, RG, senha, dados bancários ou dados sensíveis do visitante;
+- não cria perfil público nem depende de identificação individual;
+- não armazena o histórico completo da conversa;
+- sanitiza perguntas não atendidas antes de qualquer persistência autorizada;
+- utiliza contas administrativas apenas para a equipe responsável;
+- relaciona respostas a fontes e datas de revisão;
+- encaminha situações específicas ou incertas aos canais oficiais;
+- exige protocolo de retenção e exclusão antes de testes com dados reais.
 
-Qualquer teste com pessoas e qualquer uso de registros reais dependerão das orientações do projeto, das autorizações aplicáveis e da avaliação ética e institucional pertinente.
+Qualquer teste com pessoas dependerá das autorizações e orientações éticas e institucionais aplicáveis.
 
-## Critérios de sucesso
+## Qualidade e critérios de sucesso
 
-O protótipo será avaliado por evidências, incluindo:
+| Dimensão | Evidência esperada |
+| --- | --- |
+| Respostas | adequação, cobertura segura e precisão do fallback |
+| Conteúdo | 100% das respostas ativas com fonte e revisão válidas |
+| Funcionalidade | todos os fluxos críticos aprovados |
+| Desempenho | consulta local avaliada pelo percentil 95 |
+| Usabilidade | clareza, conclusão de tarefas e satisfação |
+| Acessibilidade | teclado, foco, semântica, contraste e leitores de tela |
+| Privacidade | ausência de dados pessoais nos registros de interação |
 
-- percentual de respostas consideradas adequadas no conjunto de teste;
-- frequência de fallback e perguntas ainda não cobertas;
-- tempo de resposta do mecanismo local;
-- cobertura das categorias priorizadas;
-- resultado dos testes funcionais e de acessibilidade;
-- clareza, facilidade de uso e satisfação na avaliação de usabilidade;
-- rastreabilidade de cada resposta até uma fonte revisada.
-
-As fórmulas, metas iniciais e o protocolo de avaliação estão detalhados no [planejamento do projeto](docs/PLANEJAMENTO.md).
-
-## Metodologia
-
-O trabalho utilizará **Design Science Research**, percorrendo ciclos de identificação do problema, definição de objetivos, projeto, desenvolvimento, demonstração, avaliação e comunicação. A execução técnica será incremental, organizada em sprints quinzenais e revisada com o orientador.
+As fórmulas, metas iniciais e o protocolo de avaliação estão no [planejamento do projeto](docs/PLANEJAMENTO.md).
 
 ## Planejamento
 
-O roadmap completo contém:
+O desenvolvimento combina **Design Science Research** e sprints quinzenais:
 
-- fases e sprints;
-- backlog priorizado;
-- entregáveis e critérios de aceite;
-- definição de pronto;
-- plano de testes e métricas;
-- riscos e medidas de mitigação;
-- responsabilidades e rastreabilidade dos objetivos.
+| Fase | Sprints | Resultado |
+| --- | :---: | --- |
+| Preparação científica | 0–1 | governança, fundamentação e protocolo de avaliação |
+| Descoberta e projeto | 2–3 | requisitos, conteúdo e experiência conversacional |
+| Construção do MVP | 4–7 | Django, PostgreSQL, matcher e interface integrados |
+| Avaliação e consolidação | 8–10 | testes, usabilidade, documentação e apresentação |
 
-Consulte [docs/PLANEJAMENTO.md](docs/PLANEJAMENTO.md).
+O backlog, os critérios de aceite, a Definition of Done, os riscos e as métricas estão detalhados em [docs/PLANEJAMENTO.md](docs/PLANEJAMENTO.md).
+
+## Estratégia de branches
+
+| Branch | Papel no fluxo | Recebe alterações de |
+| --- | --- | --- |
+| `leo` | desenvolvimento individual de Léo | trabalho de Léo |
+| `gustavo` | desenvolvimento individual de Gustavo | trabalho de Gustavo |
+| `dev` | integração contínua da equipe | `leo`, `gustavo` e `feature/*` |
+| `homolog` | deploy e testes de aceite | `dev`, após testes de integração |
+| `main` | versão estável e candidata a produção | `homolog`, após aprovação |
+
+```mermaid
+flowchart LR
+    L[leo] -->|PR| D[dev]
+    G[gustavo] -->|PR| D
+    F[feature/*] -->|PR| D
+    D -->|testes de integração| H[homolog]
+    H -->|deploy| E[Ambiente de homologação]
+    H -->|aceite| M[main]
+    M -.->|deploy autorizado| P[Produção]
+```
+
+### Regras de colaboração
+
+- o desenvolvimento cotidiano não acontece diretamente na `main`;
+- branches individuais devem ser atualizadas com `dev` antes do Pull Request;
+- toda integração em `dev` deve informar objetivo e critérios de teste;
+- `dev` só avança para `homolog` com testes e documentação atualizados;
+- `homolog` só avança para `main` depois do aceite e da correção de defeitos bloqueantes;
+- produção parte da `main` e depende de autorização institucional;
+- segredos, dados pessoais e configurações particulares da IDE não são versionados.
 
 ## Documentação
 
-- [Arquitetura do projeto](docs/ARQUITETURA.md)
-- [Planejamento, roadmap e sprints](docs/PLANEJAMENTO.md)
+| Documento | Conteúdo |
+| --- | --- |
+| [Arquitetura](docs/ARQUITETURA.md) | componentes, dados, interfaces HTTP, segurança, implantação e ADRs |
+| [Planejamento](docs/PLANEJAMENTO.md) | roadmap, sprints, backlog, testes, métricas, riscos e entregáveis |
 
 ## Execução local
 
-Ainda não há uma versão executável. Os requisitos, comandos de instalação, variáveis de ambiente e instruções para testes serão incluídos aqui assim que a base técnica for criada nas sprints de implementação.
+> Ainda não há uma versão executável. O repositório está na fase de planejamento.
+
+Dependências, variáveis de ambiente, migrations, carga inicial, comandos Django e execução de testes serão documentados aqui quando a fundação técnica for implementada.
 
 ## Limitações conhecidas
 
-O mecanismo planejado reconhece apenas assuntos representados na base de conhecimento e pode não compreender ambiguidades, erros de digitação ou formulações muito diferentes das cadastradas. O protótipo não interpreta documentos privados, não toma decisões e não garante resposta para toda pergunta. A precisão depende diretamente da qualidade, da cobertura e da atualização do conteúdo validado.
+O matcher reconhecerá apenas assuntos representados na base de conhecimento. Formulações ambíguas, erros de digitação e perguntas muito diferentes das variações cadastradas podem resultar em fallback. O protótipo não interpreta documentos privados, não toma decisões e não garante cobertura para toda pergunta.
 
-## Referências principais
+<details>
+<summary><strong>Referências e créditos</strong></summary>
 
 O embasamento inclui trabalhos sobre chatbots, Design Science Research, engenharia de software, usabilidade, qualidade de software e inteligência artificial, com destaque para Adamopoulou e Moussiades (2020), Caldarini, Jaf e McGarry (2022), Hevner et al. (2004), Peffers et al. (2007), Nielsen (1993), Sommerville (2016), Russell e Norvig (2021), ISO/IEC 25010 e a Lei nº 13.709/2018 (LGPD).
 
-A base de respostas deverá citar páginas, documentos e materiais oficiais da AGINOV/UNEMAT consultados durante o levantamento.
+Referências tecnológicas: [Django](https://docs.djangoproject.com/) e [PostgreSQL](https://www.postgresql.org/docs/). Os ícones da stack são fornecidos pelo projeto [Devicon](https://github.com/devicons/devicon).
+
+A base de respostas citará páginas, documentos e materiais oficiais da AGINOV/UNEMAT usados no levantamento.
+
+</details>
 
 ## Licença
 
