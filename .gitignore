@@ -11,6 +11,12 @@ venv/
 .env
 .env.*
 !.env.example
+*.log
+local_settings.py
+
+# Django generated files
+staticfiles/
+media/
 
 # Test and tool caches
 .coverage

@@ -12,6 +12,7 @@ O cronograma usa **sprints de duas semanas**. As datas devem ser preenchidas ap�
 - O conteúdo da base depende de fontes públicas ou autorizadas e de validação institucional.
 - O bolsista é o principal responsável pela pesquisa, implementação, testes e documentação, sob orientação.
 - A solução deve funcionar sem IA generativa e sem serviço externo pago.
+- A aplicação será construída com Django e PostgreSQL, usando Django Templates, ORM, migrations e Admin.
 - Nenhum dado pessoal é necessário para o funcionamento do MVP.
 - Testes com usuários e uso de dados reais devem respeitar as autorizações e orientações éticas e institucionais aplicáveis.
 - Mudanças relevantes de escopo devem ser registradas e aprovadas antes de entrar em uma sprint.
@@ -38,7 +39,7 @@ Cada sprint deve terminar com um incremento demonstrável, evidências de verifi
 | --- | --- | --- | --- |
 | Preparação científica | 0–1 | Protocolo de trabalho e revisão bibliográfica inicial | 2026 |
 | Descoberta e projeto | 2–3 | Requisitos, conteúdo inicial e fluxo conversacional | 2027 |
-| Construção do MVP | 4–7 | Interface, API, base e mecanismo de resposta integrados | 2027 |
+| Construção do MVP | 4–7 | Aplicação Django, base PostgreSQL e mecanismo de resposta integrados | 2027 |
 | Avaliação e consolidação | 8–10 | Testes, usabilidade, ajustes, documentação e apresentação | 2027 |
 
 O roadmap segue o cronograma acadêmico fornecido. Se a execução técnica puder começar em 2026, as sprints 2 em diante podem ser antecipadas sem alterar a ordem de dependência.
@@ -109,29 +110,31 @@ O roadmap segue o cronograma acadêmico fornecido. Se a execução técnica pude
 
 **Entregas:**
 
-- estrutura do frontend e da API;
-- configurações reproduzíveis do ambiente;
+- projeto Django e apps modulares de chat, conhecimento e interações;
+- settings separados por ambiente e conexão reproduzível com PostgreSQL;
+- template público e arquivos estáticos da interface;
 - tela do chatbot para dispositivos móveis e desktop;
 - estados de carregamento, erro, vazio e indisponibilidade;
 - navegação por teclado e semântica HTML inicial;
 - pipeline básico de verificação automatizada.
 
-**Critérios de aceite:** o projeto executa a partir das instruções do README; a interface funciona nas larguras definidas; não depende apenas de cor; os estados principais podem ser demonstrados com dados simulados.
+**Critérios de aceite:** migrations e aplicação Django executam a partir das instruções do README; o template funciona nas larguras definidas e não depende apenas de cor; os estados principais podem ser demonstrados com dados simulados; segredos não são versionados.
 
-### Sprint 5 — Base de conhecimento e API
+### Sprint 5 — Models, Django Admin e endpoints
 
-**Objetivo:** servir conteúdo estruturado e validado por uma API pequena e testável.
+**Objetivo:** persistir e administrar conteúdo revisado e servi-lo por interfaces HTTP pequenas e testáveis.
 
 **Entregas:**
 
-- esquema da base com identificador, categoria, pergunta canônica, variações, palavras-chave, resposta, fonte, revisão e status;
-- carga e validação dos dados;
+- Django Models e migrations para categorias, perguntas, variações, palavras-chave, respostas, fontes, revisão e status;
+- constraints, managers e carga inicial validada;
+- Django Admin com autenticação, permissões, filtros e campos adequados para gestão interna;
 - endpoints de categorias, pergunta e feedback;
 - tratamento consistente de erros;
-- testes unitários do modelo e da API;
-- documentação do contrato da API.
+- testes de models, Admin, views e contratos JSON;
+- documentação das interfaces e do procedimento de gestão do conteúdo.
 
-**Critérios de aceite:** entradas inválidas são rejeitadas; conteúdo não aprovado não é oferecido; os endpoints críticos têm testes; respostas incluem referência à fonte quando aplicável.
+**Critérios de aceite:** migrations são reproduzíveis; usuário não autorizado não acessa o Admin; entradas inválidas são rejeitadas; conteúdo não aprovado não é oferecido; endpoints críticos têm testes; respostas incluem referência à fonte quando aplicável.
 
 ### Sprint 6 — Mecanismo de correspondência e confiança
 
@@ -154,7 +157,7 @@ O roadmap segue o cronograma acadêmico fornecido. Se a execução técnica pude
 
 **Entregas:**
 
-- frontend integrado à API;
+- JavaScript do template integrado aos endpoints Django na mesma origem;
 - avaliação “útil/não útil”;
 - registro de pergunta sem resposta;
 - sanitização e limites de tamanho/uso;
@@ -162,7 +165,7 @@ O roadmap segue o cronograma acadêmico fornecido. Se a execução técnica pude
 - configuração de retenção e procedimento de exclusão;
 - testes integrados dos fluxos críticos.
 
-**Critérios de aceite:** pergunta, resposta, fallback e feedback funcionam ponta a ponta; falha da API é comunicada sem perder segurança; não são persistidos IP, identificador de dispositivo ou dados de perfil por padrão; registros potencialmente pessoais são descartados ou anonimizados conforme protocolo aprovado.
+**Critérios de aceite:** pergunta, resposta, fallback e feedback funcionam ponta a ponta com proteção CSRF; falha do endpoint é comunicada sem perder segurança; não são persistidos IP, identificador de dispositivo ou dados de perfil por padrão; registros potencialmente pessoais são descartados ou anonimizados conforme protocolo aprovado.
 
 ### Sprint 8 — Qualidade funcional, conteúdo e acessibilidade
 
@@ -220,11 +223,11 @@ O roadmap segue o cronograma acadêmico fornecido. Se a execução técnica pude
 | US-05 | Como visitante, quero ser encaminhado corretamente quando o bot não souber responder | Must | 3–7 |
 | US-06 | Como visitante, quero avaliar rapidamente se uma resposta foi útil | Should | 7 |
 | US-07 | Como pesquisador, quero identificar assuntos não atendidos sem identificar o usuário | Must | 7–8 |
-| US-08 | Como mantenedor, quero atualizar a base sem alterar o código da aplicação | Must | 5 |
+| US-08 | Como mantenedor autorizado, quero atualizar a base pelo Django Admin sem alterar o código | Must | 5 |
 | US-09 | Como mantenedor, quero validar automaticamente campos, fontes e duplicidades da base | Should | 5–8 |
 | US-10 | Como usuário de tecnologia assistiva, quero operar os fluxos essenciais por teclado e leitor de tela | Must | 4–8 |
 | US-11 | Como pesquisador, quero exportar métricas agregadas para avaliar o artefato | Should | 8–10 |
-| US-12 | Como gestor, quero administrar conteúdo por painel autenticado | Won't no MVP | Futuro |
+| US-12 | Como gestor, quero um painel editorial personalizado além do Django Admin | Won't no MVP | Futuro |
 | US-13 | Como visitante, quero conversar pelo WhatsApp | Won't no MVP | Futuro |
 | US-14 | Como visitante, quero respostas geradas por modelo de linguagem | Won't no MVP | Futuro |
 
@@ -253,8 +256,9 @@ Itens em rascunho, expirados ou arquivados não deverão ser apresentados como r
 
 | Nível | O que verificar | Evidência |
 | --- | --- | --- |
-| Unitário | normalização, similaridade, confiança, sanitização e validação de dados | suíte automatizada |
-| API | contratos, códigos de erro, limites e conteúdo retornado | testes automatizados de endpoint |
+| Unitário | normalização, similaridade, confiança, sanitização, Models e managers | suíte automatizada |
+| Views | métodos, CSRF, contratos JSON, códigos de erro e limites | cliente de testes do Django |
+| Admin | autenticação, permissões, filtros, formulários e status do conteúdo | testes do Django e inspeção manual |
 | Integração | pergunta → resposta/fallback → feedback/registro | cenários automatizados |
 | Conteúdo | correção, clareza, fonte, validade e encaminhamento | checklist com revisão humana |
 | Acessibilidade | teclado, foco, semântica, contraste e mensagens de estado | testes automáticos e inspeção manual |
@@ -312,6 +316,7 @@ Uma entrega está pronta quando:
 
 - atende aos critérios de aceite;
 - foi revisada e possui testes proporcionais ao risco;
+- inclui migration revisada quando altera um Django Model;
 - não inclui segredo, dado pessoal ou conteúdo institucional sem autorização;
 - documentação e decisões afetadas foram atualizadas;
 - verificações automatizadas passam;
@@ -362,7 +367,7 @@ O quadro pode usar as colunas: `Backlog`, `Pronto`, `Em andamento`, `Em revisão
 | Modelar fluxo de interação | 3 | diagrama, protótipo e critérios de fallback |
 | Organizar base inicial | 2–5 | base validada e matriz de fontes |
 | Elaborar interface web | 3–4 | interface responsiva e testes de acessibilidade |
-| Integrar frontend e backend | 5–7 | fluxo ponta a ponta testado |
+| Integrar templates, endpoints e serviços | 5–7 | fluxo ponta a ponta testado |
 | Avaliar qualidade das respostas | 6–8 | conjunto reservado, métricas e relatório de erros |
 | Avaliar usabilidade | 9 | protocolo, evidências e análise |
 | Documentar funcionamento e limites | 0–10 | README, tutorial, documentação técnica e relatório final |
@@ -380,7 +385,7 @@ O quadro pode usar as colunas: `Backlog`, `Pronto`, `Em andamento`, `Em revisão
 ## 16. Próximas ações
 
 1. Confirmar com o orientador a duração, data inicial e data final da bolsa.
-2. Confirmar FastAPI e definir o driver, a biblioteca de acesso e as migrações do PostgreSQL.
+2. Escolher a versão estável/LTS do Django e do `psycopg` compatíveis com o calendário do projeto.
 3. Identificar quem pode validar conteúdo e canais oficiais da AGINOV.
 4. Definir as primeiras categorias e localizar suas fontes públicas.
 5. Aprovar o protocolo de pesquisa e privacidade antes de coletar registros ou realizar testes com pessoas.
