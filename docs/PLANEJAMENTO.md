@@ -380,7 +380,7 @@ O quadro pode usar as colunas: `Backlog`, `Pronto`, `Em andamento`, `Em revisão
 ## 16. Próximas ações
 
 1. Confirmar com o orientador a duração, data inicial e data final da bolsa.
-2. Validar as escolhas técnicas iniciais: FastAPI, JSON e SQLite.
+2. Confirmar FastAPI e definir o driver, a biblioteca de acesso e as migrações do PostgreSQL.
 3. Identificar quem pode validar conteúdo e canais oficiais da AGINOV.
 4. Definir as primeiras categorias e localizar suas fontes públicas.
 5. Aprovar o protocolo de pesquisa e privacidade antes de coletar registros ou realizar testes com pessoas.

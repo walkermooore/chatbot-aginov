@@ -32,7 +32,7 @@ Este documento descreve a arquitetura de referência do MVP do Chatbot AGINOV. A
 2. **Conteúdo e código são separados:** respostas podem ser revisadas sem alteração das regras da aplicação.
 3. **Toda resposta possui origem:** itens ativos devem conter fonte e data de revisão.
 4. **Privacidade por padrão:** o sistema funciona sem identificar o usuário e sem armazenar conversas completas.
-5. **Dependências apontam para o núcleo:** regras de negócio não dependem do framework web ou do SQLite.
+5. **Dependências apontam para o núcleo:** regras de negócio não dependem do framework web ou do PostgreSQL.
 6. **Complexidade justificada por evidência:** tecnologias adicionais entram apenas quando uma limitação medida exigir.
 7. **Acessibilidade faz parte da arquitetura:** semântica, teclado, foco e mensagens de estado não são acabamento posterior.
 
@@ -53,7 +53,7 @@ flowchart LR
     S -.->|referencia; não altera| O
 ```
 
-O protótipo não consulta automaticamente sistemas internos da Universidade. As fontes oficiais são coletadas e revisadas antes de serem incorporadas à base versionada.
+O protótipo não consulta automaticamente sistemas internos da Universidade. As fontes oficiais são coletadas e revisadas antes de serem incorporadas à base controlada.
 
 ## 4. Contêineres da solução
 
@@ -70,14 +70,12 @@ flowchart TB
         REPO[Adaptadores de dados]
     end
 
-    KB[(Base de conhecimento<br/>JSON versionado)]
-    DB[(Registros mínimos<br/>SQLite)]
+    DB[(PostgreSQL<br/>conhecimento e registros mínimos)]
 
     UI -->|HTTPS / JSON| API
     API --> CORE
     CORE --> NLP
     CORE --> REPO
-    REPO --> KB
     REPO --> DB
 ```
 
@@ -87,8 +85,7 @@ flowchart TB
 | API | contrato HTTP, validação de entrada e composição das respostas | Python e FastAPI |
 | Núcleo | executar casos de uso e políticas de confiança, fallback e registro | Python independente do framework |
 | Matcher | normalizar perguntas, gerar candidatos e calcular pontuações | biblioteca local de PLN/similaridade a definir |
-| Base de conhecimento | armazenar conteúdo aprovado, legível e versionável | JSON |
-| Registros | guardar somente feedback agregado e perguntas sanitizadas não atendidas | SQLite |
+| Banco de dados | armazenar conhecimento aprovado, feedback agregado e perguntas sanitizadas não atendidas | PostgreSQL |
 
 Para o MVP, API e frontend podem ser publicados no mesmo processo/origem. A separação acima é lógica; ela não exige servidores distintos.
 
@@ -105,8 +102,8 @@ flowchart LR
     ASK --> EVENT[Porta InteractionRepository]
     FEED --> EVENT
     MATCH --> MATCHER[Adaptador de similaridade]
-    KNOW --> JSON[Adaptador JSON]
-    EVENT --> SQLITE[Adaptador SQLite]
+    KNOW --> POSTGRES[Adaptador PostgreSQL]
+    EVENT --> POSTGRES
 ```
 
 ### Responsabilidades
@@ -120,7 +117,7 @@ flowchart LR
 - **Repositório de interações:** persistir eventos mínimos já sanitizados.
 - **Sanitizador:** remover ou bloquear conteúdo incompatível com o protocolo de privacidade antes da persistência.
 
-O domínio deve conhecer interfaces (portas), não FastAPI, arquivos JSON ou SQLite. Isso permite testar as regras em memória e substituir adaptadores futuramente.
+O domínio deve conhecer interfaces (portas), não FastAPI ou PostgreSQL. Isso permite testar as regras em memória e substituir adaptadores futuramente.
 
 ## 6. Componentes do frontend
 
@@ -145,14 +142,13 @@ sequenceDiagram
     participant A as API
     participant C as Caso de uso
     participant M as Matcher
-    participant K as Base JSON
-    participant D as SQLite
+    participant D as PostgreSQL
 
     U->>W: Envia pergunta
     W->>A: POST /api/v1/messages
     A->>A: Valida tamanho e formato
     A->>C: answer(question, category?)
-    C->>K: Lista itens ativos
+    C->>D: Lista itens ativos
     C->>M: Classifica candidatos
     M-->>C: Candidatos + pontuações
     alt confiança suficiente e sem ambiguidade
@@ -243,28 +239,63 @@ O texto e os endereços dos exemplos são marcadores, não conteúdo oficial. O 
 
 ## 9. Modelo de dados
 
-### Item da base de conhecimento
+### Modelo relacional proposto
 
-```json
-{
-  "id": "kb_001",
-  "category": "categoria",
-  "canonical_question": "Pergunta principal",
-  "variations": ["Outra forma da pergunta"],
-  "keywords": ["termo relevante"],
-  "answer": "Resposta revisada e limitada.",
-  "source": {
-    "title": "Fonte oficial",
-    "url": "https://dominio-institucional.example/recurso"
-  },
-  "reviewed_at": "AAAA-MM-DD",
-  "status": "draft"
-}
+```mermaid
+erDiagram
+    CATEGORIES ||--o{ KNOWLEDGE_ITEMS : classifica
+    SOURCES ||--o{ KNOWLEDGE_ITEMS : fundamenta
+    KNOWLEDGE_ITEMS ||--o{ QUESTION_VARIATIONS : possui
+    KNOWLEDGE_ITEMS ||--o{ KNOWLEDGE_KEYWORDS : possui
+    KEYWORDS ||--o{ KNOWLEDGE_KEYWORDS : compoe
+    KNOWLEDGE_ITEMS ||--o{ FEEDBACK_EVENTS : recebe
+
+    CATEGORIES {
+        uuid id PK
+        string slug UK
+        string name
+        boolean active
+    }
+    SOURCES {
+        uuid id PK
+        string title
+        string url
+    }
+    KNOWLEDGE_ITEMS {
+        uuid id PK
+        uuid category_id FK
+        uuid source_id FK
+        text canonical_question
+        text answer
+        date reviewed_at
+        string status
+    }
+    QUESTION_VARIATIONS {
+        uuid id PK
+        uuid knowledge_item_id FK
+        text question
+    }
+    KEYWORDS {
+        uuid id PK
+        string normalized_value UK
+    }
+    KNOWLEDGE_KEYWORDS {
+        uuid knowledge_item_id FK
+        uuid keyword_id FK
+    }
+    FEEDBACK_EVENTS {
+        uuid id PK
+        uuid knowledge_item_id FK
+        string result_type
+        boolean helpful
+        timestamp created_at
+        timestamp expires_at
+    }
 ```
 
-Valores de `status`: `draft`, `approved`, `expired` e `archived`. Somente `approved`, com esquema válido e revisão vigente, poderá participar da busca.
+Valores de `knowledge_items.status`: `draft`, `approved`, `expired` e `archived`. Somente `approved`, com campos válidos e revisão vigente, poderá participar da busca. Restrições, chaves estrangeiras e índices devem preservar integridade e tornar as consultas do matcher previsíveis.
 
-### Registros SQLite propostos
+### Tabelas de eventos
 
 **`unanswered_events`**
 
@@ -298,15 +329,15 @@ Não serão armazenados IP, nome, e-mail, documento, localização precisa, iden
 | registro de dado pessoal | aviso, sanitização, descarte seguro e retenção limitada |
 | dependência ou configuração vulnerável | versões fixadas, auditoria e segredos fora do repositório |
 | acesso entre origens indevidas | mesma origem no MVP ou lista CORS restrita |
-| alteração não rastreada da base | Git, revisão e validação automatizada do JSON |
+| alteração não rastreada da base | migrações versionadas, papéis restritos e trilha de revisão do conteúdo |
 
 Requisitos adicionais:
 
 - HTTPS em qualquer ambiente acessível por rede;
 - cabeçalhos de segurança, incluindo CSP quando aplicável;
 - ausência de segredo no frontend e no repositório;
-- consultas SQLite parametrizadas;
-- permissões mínimas no arquivo de dados;
+- consultas PostgreSQL parametrizadas por meio do driver ou ORM adotado;
+- usuário e papel do PostgreSQL com privilégios mínimos necessários;
 - logs sem corpo integral de requisição;
 - procedimento documentado de retenção, exportação agregada e exclusão;
 - conteúdo oficial exibido como texto, nunca executado como marcação.
@@ -334,7 +365,7 @@ chatbot-aginov/
 │   ├── api/                  # rotas, dependências e esquemas HTTP
 │   ├── application/          # casos de uso e portas
 │   ├── domain/               # entidades e políticas puras
-│   ├── infrastructure/       # JSON, SQLite e matcher concreto
+│   ├── infrastructure/       # PostgreSQL e matcher concreto
 │   ├── config.py             # configuração validada por ambiente
 │   └── main.py               # composição e inicialização
 ├── frontend/
@@ -343,7 +374,7 @@ chatbot-aginov/
 │   ├── styles/
 │   └── index.html
 ├── data/
-│   ├── knowledge_base/       # conteúdo versionado
+│   ├── seeds/                # carga inicial revisada
 │   └── samples/              # somente dados fictícios
 ├── docs/
 │   ├── ARQUITETURA.md
@@ -371,8 +402,7 @@ O domínio não importa módulos de `api` ou `infrastructure`. A camada de compo
 
 Configurações previstas, com nomes definitivos a confirmar:
 
-- caminho da base de conhecimento;
-- caminho do SQLite;
+- URL de conexão com o PostgreSQL, fornecida por variável de ambiente;
 - limite e margem de confiança;
 - tamanho máximo da pergunta;
 - política e prazo de retenção;
@@ -389,15 +419,14 @@ O programa deverá interromper a inicialização com mensagem clara se uma confi
 ```mermaid
 flowchart LR
     B[Navegador local] -->|HTTP local| P[Processo FastAPI]
-    P --> J[(JSON no repositório)]
-    P --> Q[(SQLite local ignorado pelo Git)]
+    P --> Q[(PostgreSQL<br/>serviço local ou contêiner)]
 ```
 
 É o único cenário necessário para demonstrar e avaliar o MVP.
 
 ### Possível piloto institucional futuro
 
-Um piloto dependerá de aprovação e deverá acrescentar proxy HTTPS, política de backup e retenção, monitoramento, execução em contêiner, gestão de configuração e análise institucional de segurança e privacidade. PostgreSQL só será considerado se concorrência, volume ou operação comprovarem a limitação do SQLite.
+Um piloto dependerá de aprovação e deverá acrescentar proxy HTTPS, política de backup e retenção, monitoramento, execução em contêiner, gestão segura das credenciais do PostgreSQL e análise institucional de segurança e privacidade.
 
 ## 15. Observabilidade e avaliação
 
@@ -417,7 +446,7 @@ Métricas de pesquisa devem ser geradas de forma reproduzível a partir de dados
 
 - **Domínio:** política de confiança, ambiguidade e validade do conteúdo sem I/O.
 - **Aplicação:** casos de resposta, fallback e feedback com adaptadores em memória.
-- **Infraestrutura:** leitura de JSON, migrações SQLite, sanitização e matcher.
+- **Infraestrutura:** repositórios e migrações PostgreSQL, sanitização e matcher.
 - **Contrato:** esquemas, status HTTP e compatibilidade do frontend com a API.
 - **Integração:** fluxo real com arquivos temporários e banco isolado.
 - **Frontend:** renderização segura, estados, teclado e comportamento com erro da API.
@@ -430,8 +459,8 @@ Métricas de pesquisa devem ser geradas de forma reproduzível a partir de dados
 | ADR-001 | monólito modular | menor custo operacional e separação lógica suficiente | Proposta |
 | ADR-002 | FastAPI no backend | tipagem, validação e documentação automática do contrato | Proposta |
 | ADR-003 | frontend sem framework | interface pequena e menor complexidade no MVP | Proposta |
-| ADR-004 | conhecimento em JSON | revisão por Git, portabilidade e volume inicial reduzido | Proposta |
-| ADR-005 | eventos mínimos em SQLite | persistência local simples e sem serviço externo | Proposta |
+| ADR-004 | conhecimento em PostgreSQL | centralizar integridade, consultas e evolução dos dados do projeto | Confirmada |
+| ADR-005 | eventos mínimos em PostgreSQL | banco relacional definido para desenvolvimento e possível evolução do projeto | Confirmada |
 | ADR-006 | correspondência determinística | explicabilidade, custo e alinhamento ao escopo científico | Proposta |
 | ADR-007 | fallback por confiança e ambiguidade | reduzir respostas indevidas | Proposta |
 | ADR-008 | não armazenar conversas completas | minimização de dados e redução de risco | Proposta |
@@ -442,7 +471,7 @@ Quando uma decisão for confirmada, substituída ou rejeitada, deverá receber c
 
 ```mermaid
 flowchart LR
-    M[MVP local<br/>JSON + SQLite] --> P[Piloto autorizado<br/>implantação controlada]
+    M[MVP local<br/>FastAPI + PostgreSQL] --> P[Piloto autorizado<br/>implantação controlada]
     P --> A[Administração de conteúdo<br/>com revisão e auditoria]
     A --> E[Escala ou novos canais<br/>se métricas justificarem]
     E -.-> G[IA generativa / RAG<br/>somente com nova avaliação]
@@ -461,3 +490,4 @@ Cada evolução exige evidência de necessidade e nova análise de risco. Em esp
 7. Confirmar a necessidade do token efêmero de feedback.
 8. Definir o canal oficial exibido no fallback.
 9. Decidir se haverá apenas execução local ou algum ambiente de demonstração.
+10. Escolher driver, biblioteca de acesso e ferramenta de migração para PostgreSQL.

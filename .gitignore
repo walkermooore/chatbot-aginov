@@ -8,9 +8,6 @@ __pycache__/
 venv/
 
 # Runtime data and secrets
-*.db
-*.sqlite
-*.sqlite3
 .env
 .env.*
 !.env.example

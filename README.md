@@ -72,16 +72,16 @@ flowchart LR
     U[Usuário] --> W[Interface web<br/>HTML, CSS e JavaScript]
     W --> A[API Python<br/>FastAPI]
     A --> M[Normalização e<br/>correspondência textual]
-    M --> K[(Base de conhecimento<br/>JSON versionado)]
+    M --> K[(PostgreSQL<br/>conhecimento e registros)]
     M --> C{Confiança suficiente?}
     C -->|Sim| R[Resposta + fonte]
     C -->|Não| F[Fallback + canal oficial]
-    F --> S[(Registro sanitizado<br/>SQLite)]
+    F --> K
     R --> V[Avaliação de utilidade]
-    V --> S
+    V --> K
 ```
 
-Essa é uma decisão inicial para reduzir complexidade. FastAPI, JSON e SQLite deverão ser confirmados durante o levantamento de requisitos. PostgreSQL, Supabase e modelos avançados não são necessários para demonstrar o MVP.
+PostgreSQL foi definido como banco de dados do projeto, concentrando a base de conhecimento e os registros operacionais mínimos. FastAPI permanece como proposta a confirmar durante o levantamento de requisitos. Supabase e modelos avançados não são necessários para demonstrar o MVP.
 
 Os componentes, contratos da API, modelo de dados, fluxos, controles de segurança e decisões técnicas estão detalhados em [docs/ARQUITETURA.md](docs/ARQUITETURA.md).
 
@@ -89,8 +89,7 @@ Os componentes, contratos da API, modelo de dados, fluxos, controles de seguran�
 
 - **Frontend:** HTML5, CSS3 e JavaScript;
 - **Backend:** Python com FastAPI;
-- **Conhecimento:** JSON versionado, alimentado somente por conteúdo autorizado;
-- **Registros locais:** SQLite;
+- **Banco de dados:** PostgreSQL para a base de conhecimento e os registros operacionais mínimos;
 - **PLN:** normalização, palavras-chave e similaridade textual;
 - **Qualidade:** testes automatizados, testes de conteúdo e avaliação de usabilidade;
 - **Versionamento:** Git e GitHub.
@@ -104,7 +103,7 @@ chatbot-aginov/
 ├── app/                    # API e mecanismo de resposta
 ├── frontend/               # Interface web
 ├── data/
-│   ├── knowledge_base/     # Conteúdo aprovado e versionado
+│   ├── seeds/              # Carga inicial revisada
 │   └── samples/            # Exemplos fictícios para desenvolvimento
 ├── docs/                   # Planejamento e documentação do projeto
 ├── tests/                  # Testes automatizados e conjuntos de avaliação
